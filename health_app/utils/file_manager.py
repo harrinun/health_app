@@ -15,16 +15,21 @@ def custom_json_serializer(obj):
 class FileManager:
     def __init__(self, file_path: str):
         self.file_path = Path(file_path)
+        # Ensure directory exists
         self.file_path.parent.mkdir(parents=True, exist_ok=True)
         if not self.file_path.exists():
-            self.write_data([])  # Initialize with empty list
+            with self.file_path.open("w") as f:
+                json.dump([], f)
 
-    def read_data(self, include_deleted=False) -> List[Dict[str, Any]]:
-        with self.file_path.open("r", encoding="utf-8") as f:
-            data = json.load(f)
-        if not include_deleted:
-            data = [record for record in data if record.get("date_deleted") is None]
-        return data
+    def read_all(self) -> List[Dict]:
+        with self.file_path.open("r") as f:
+            return json.load(f)
+
+    def write_all(self, data: List[Dict]):
+        with self.file_path.open("w") as f:
+            json.dump(data, f, default=custom_json_serializer, indent=2)
+
+    # Update other methods to use read_all/write_all
 
     def write_data(self, data: List[Dict[str, Any]]):
         with self.file_path.open("w", encoding="utf-8") as f:

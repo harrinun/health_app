@@ -5,7 +5,7 @@ from typing import Optional, List, Dict
 
 class DoctorRepository:
     def __init__(self):
-        self.file_manager = FileManager("data/doctors.json")
+        self.file_manager = FileManager("health_app/data/doctors.json")
 
     def create(self, doctor_data: Dict) -> Dict:
         doctor_data["id"] = self.file_manager.generate_id()

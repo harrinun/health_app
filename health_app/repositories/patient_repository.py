@@ -3,20 +3,24 @@ from datetime import datetime, timezone
 from typing import Optional, List, Dict
 import json
 from uuid import UUID
+from health_app.repositories.base_repository import BaseRepository
+from health_app.schemas.patient import PatientOut
 
 
-
-class PatientRepository:
+class PatientRepository(BaseRepository):
     def __init__(self):
-        self.file_manager = FileManager("data/patients.json")
-
-    def create(self, patient_data: Dict) -> Dict:
-        patient_data["id"] = self.file_manager.generate_id()
-        patient_data["date_created"] = datetime.now(timezone.utc).isoformat()
-        patient_data["date_updated"] = None
-        patient_data["date_deleted"] = None
-        self.file_manager.save(patient_data)
-        return patient_data
+        super().__init__(
+            file_path="health_app/data/patients.json",
+            schema_class=PatientOut
+        )
+    
+    def create(self, data: dict) -> PatientOut:
+        data["id"] = str(uuid.uuid4())
+        data["date_created"] = datetime.now(timezone.utc).isoformat()
+        all_data = self.file_manager.read_all()
+        all_data.append(data)
+        self.file_manager.write_all(all_data)
+        return self.schema_class(**data)
 
     def get_all(self) -> List[Dict]:
         return self.file_manager.read_data()

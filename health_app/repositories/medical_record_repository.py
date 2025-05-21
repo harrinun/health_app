@@ -6,7 +6,7 @@ from health_app.schemas.medical_record import MedicalRecordBase
 
 class MedicalRecordRepository:
     def __init__(self):
-        self.file_path = "data/medical_records.json"
+        self.file_path = "health_app/data/medical_records.json"
         self.manager = FileManager(self.file_path)
 
     def get_all(self) -> List[MedicalRecordBase]:

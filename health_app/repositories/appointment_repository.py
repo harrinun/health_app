@@ -6,7 +6,7 @@ from health_app.utils.file_manager import FileManager
 from health_app.schemas.appointment import AppointmentCreate, AppointmentUpdate, AppointmentOut, AppointmentStatus
 
 class AppointmentRepository:
-    def __init__(self, file_path: str = "data/appointments.json"):
+    def __init__(self, file_path: str = "health_app/data/appointments.json"):
         self.file_manager = FileManager(file_path)
 
     def list_appointments(self, include_deleted: bool = False) -> List[AppointmentOut]:
