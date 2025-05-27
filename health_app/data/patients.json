@@ -297,5 +297,28 @@
             "relationship": "Coach",
             "phone_number": "+7917976-642284 "
         }
+    },
+    {
+        "date_created": "2025-05-27T22:49:30.120853Z",
+        "date_updated": "2025-05-27T22:49:30.120853Z",
+        "date_deleted": null,
+        "id": "f603b000-8a97-4ca1-9ba7-b42b53c99b1e",
+        "patient_folder_number": "GHA-TM-AAA0014",
+        "biodata": {
+            "first_name": "Tarrus",
+            "last_name": "Riley",
+            "date_of_birth": "2025-05-27",
+            "gender": "Male"
+        },
+        "contact_information": {
+            "phone_number": "7818273776634072 277",
+            "email": "harrinun@gmail.com",
+            "address": "Kingston"
+        },
+        "emergency_contact": {
+            "full_name": "Sizzla Kalongi",
+            "relationship": "Brother",
+            "phone_number": "+ 365 658025452 "
+        }
     }
 ]

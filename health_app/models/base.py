@@ -27,10 +27,10 @@ class Biodata(BaseModel):
 
     @field_validator('date_of_birth')
     @classmethod
-    def ensure_past_date(cls, v: date) -> date:
-        """Validate that the date of birth is in the past."""
+    def ensure_not_future_date(cls, v: date) -> date:
+        """Validate that the date of birth is today or in the past."""
         if v > date.today(): 
-            raise ValueError('Date of birth must be in the past or today.')
+            raise ValueError('Date of birth must be today or in the past.')
         return v
 
 
