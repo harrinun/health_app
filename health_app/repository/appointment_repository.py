@@ -1,19 +1,17 @@
-from pathlib import Path # Already imported, but good for clarity per file
-from typing import List, Optional # Already imported, but good for clarity per file
+from pathlib import Path 
+from typing import List, Optional 
 from uuid import UUID
 from datetime import datetime
 
-# Assuming BaseRepository, AppointmentModel, AppointmentStatusEnum, FileManager
-# are correctly importable
+
 from .base_repository import BaseRepository
 from ..models.appointment_model import AppointmentModel # Specific model
 from ..models.enums import AppointmentStatusEnum # For status-based filtering
 from ..utils.file_manager import FileManager
 
-# --- Configuration for Appointment Data ---
-# Construct the path to the data file: health_app/data/appointments.json
+# Configuration for Appointment Data
 try:
-    APP_DIR_APPOINTMENT = Path(__file__).resolve().parent.parent # Renamed to avoid clash if in same execution scope
+    APP_DIR_APPOINTMENT = Path(__file__).resolve().parent.parent
 except NameError:
     current_dir_appointment = Path(".").resolve()
     if (current_dir_appointment / "models").exists() and (current_dir_appointment / "repository").exists():

@@ -2,7 +2,7 @@ from uuid import UUID, uuid4
 from pydantic import Field
 from datetime import date
 from typing import Optional, List
-from .base import TimestampMixin # Relative import
+from .base import TimestampMixin 
 
 class MedicalRecordModel(TimestampMixin):
     """

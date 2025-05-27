@@ -1,7 +1,6 @@
 from uuid import UUID, uuid4
-from pydantic import Field, BaseModel # BaseModel is the base for Pydantic models
+from pydantic import Field
 
-# Relative import from base.py in the same 'models' directory
 from .base import TimestampMixin, Biodata, ContactInformation, EmergencyContact 
 
 class PatientModel(TimestampMixin): # Inherits date_created, date_updated, date_deleted
@@ -19,7 +18,7 @@ class PatientModel(TimestampMixin): # Inherits date_created, date_updated, date_
     contact_information: ContactInformation = Field(..., description="Patient's contact details.")
     emergency_contact: EmergencyContact = Field(..., description="Patient's emergency contact details.")
 
-    # Pydantic v2 style configuration
+
     model_config = {
         "from_attributes": True,  # Enables creating model instances from ORM objects or other attribute-based sources.
         "json_schema_extra": {    # Example of adding extra info to the JSON schema

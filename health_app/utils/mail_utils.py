@@ -54,7 +54,7 @@ async def send_patient_welcome_email(email_to: EmailStr, patient_name: str):
             <h2>Welcome, {patient_name}!</h2>
             <p>Thank you for registering with the Health App. Your patient profile has been successfully created.</p>
             <p>We are pleased to have you on board.</p>
-            <p>If you have any questions, feel free to contact our support.</p>
+            <p>If you have any questions, feel free to contact our support via this mail.</p>
             <p>Best regards,<br/>The Health App Team</p>
         </body>
     </html>

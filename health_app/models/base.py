@@ -1,8 +1,8 @@
 from pydantic import BaseModel, Field, EmailStr, field_validator
-from datetime import datetime, date, timezone # Added timezone import
+from datetime import datetime, date, timezone 
 from typing import Optional, List
 from uuid import UUID, uuid4
-from .enums import GenderEnum # Import from enums.py in the same directory
+from .enums import GenderEnum 
 
 class TimestampMixin(BaseModel):
     """
@@ -15,14 +15,7 @@ class TimestampMixin(BaseModel):
     date_updated: datetime = Field(default_factory=lambda: datetime.now(timezone.utc), description="Timestamp of when the record was last updated (UTC).")
     date_deleted: Optional[datetime] = Field(default=None, description="Timestamp of when the record was soft-deleted (UTC). Null if not deleted.")
 
-    # Note on date_updated:
-    # Automatically updating `date_updated` on every field modification within a Pydantic model
-    # itself can be complex and might have unintended side effects depending on how models are used.
-    # A common and robust pattern is to explicitly set `date_updated = datetime.now(timezone.utc)`
-    # in the service or repository layer just before saving any updates to the data store.
-    # This ensures it's updated only when an actual save/commit operation occurs.
-
-
+ 
 class Biodata(BaseModel):
     """
     Stores personal identification details.
@@ -36,7 +29,7 @@ class Biodata(BaseModel):
     @classmethod
     def ensure_past_date(cls, v: date) -> date:
         """Validate that the date of birth is in the past."""
-        if v > date.today(): # date.today() is timezone-naive, which is fine for date comparisons.
+        if v > date.today(): 
             raise ValueError('Date of birth must be in the past or today.')
         return v
 

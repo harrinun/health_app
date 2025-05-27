@@ -3,8 +3,6 @@ import time
 import logging
 import uuid # For generating a unique request ID
 
-# It's good practice for middleware to use its own logger or a shared app logger.
-# If you have a central logging setup, you might get the logger from there.
 # Using a more specific logger name for middleware.
 logger = logging.getLogger("health_app.middleware") 
 
@@ -34,19 +32,9 @@ async def add_process_time_header_and_log(request: Request, call_next) -> Respon
         log_message_request += f" - Query: {request.query_params}"
     logger.info(log_message_request)
 
-    # Example of logging headers (be careful with sensitive info like Authorization)
-    # sensitive_headers = {"authorization", "cookie", "x-api-key"} # Set of headers to redact or not log
-    # loggable_headers = {k: v for k, v in request.headers.items() if k.lower() not in sensitive_headers}
-    # logger.debug(f"Request ID={request_id} - Headers: {loggable_headers}")
-
     try:
         response: Response = await call_next(request)
     except Exception as e:
-        # If an exception occurs and is handled by an exception handler later,
-        # this middleware will still execute its "after" part if the handler
-        # returns a valid response. If the exception bubbles up unhandled by FastAPI,
-        # this "after" part might not run or run incompletely for the response.
-        # FastAPI's exception handlers typically create a Response object.
         process_time = time.time() - start_time
         logger.error(
             f"Error processing request: ID={request_id} - "

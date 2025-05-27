@@ -2,8 +2,8 @@ from uuid import UUID, uuid4
 from pydantic import Field, field_validator
 from datetime import datetime # Ensure datetime and timezone are available
 from typing import Optional
-from .base import TimestampMixin # Relative import
-from .enums import AppointmentStatusEnum # Relative import
+from .base import TimestampMixin 
+from .enums import AppointmentStatusEnum 
 
 class AppointmentModel(TimestampMixin):
     """
@@ -23,19 +23,7 @@ class AppointmentModel(TimestampMixin):
     def ensure_future_or_present_datetime(cls, v: datetime) -> datetime:
         """
         Validate that the appointment datetime is not in the past if the appointment is new or being scheduled.
-        It's crucial that 'v' is timezone-aware if comparing with datetime.now(timezone.utc).
-        Pydantic v2 generally passes timezone-aware datetimes if the input string includes timezone info
-        or if it's constructed as timezone-aware.
         """
-        # Ensure 'v' is timezone-aware before comparison if it might not be.
-        # If 'v' is naive, it should be localized or assumed to be UTC.
-        # For simplicity, we assume 'v' will be provided as or converted to UTC.
-        # if v.tzinfo is None:
-        #     v = v.replace(tzinfo=timezone.utc) # Or handle as an error if naive datetimes are not allowed
-
-        # This validation is context-dependent. For creating NEW appointments, it makes sense.
-        # For loading existing data, or updating status to 'Completed' for a past appointment,
-        # this rule might need to be bypassed or handled in the service layer.
         # if v < datetime.now(timezone.utc) and status not in [AppointmentStatusEnum.COMPLETED, AppointmentStatusEnum.CANCELLED]:
         #    raise ValueError('Appointment date and time cannot be in the past for new or active appointments.')
         return v

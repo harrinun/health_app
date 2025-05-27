@@ -2,7 +2,7 @@ from uuid import UUID, uuid4
 from pydantic import Field
 from typing import Optional
 
-from .base import TimestampMixin, Biodata, ContactInformation, EmergencyContact # Relative import
+from .base import TimestampMixin, Biodata, ContactInformation, EmergencyContact 
 
 
 
@@ -19,4 +19,4 @@ class DoctorModel(TimestampMixin):
     emergency_contact: Optional[EmergencyContact] = Field(default=None, description="Doctor's emergency contact details (optional).")
 
     class Config:
-        from_attributes = True
+        from_attributes = True  # This allows the Pydantic model to be created from arbitrary objects that have attributes
