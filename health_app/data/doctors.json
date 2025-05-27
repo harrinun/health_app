@@ -1,0 +1,26 @@
+[
+    {
+        "date_created": "2025-05-26T22:03:03.248031Z",
+        "date_updated": "2025-05-26T22:03:03.248031Z",
+        "date_deleted": null,
+        "id": "9c63e608-485a-4282-b489-a23fb40afd59",
+        "biodata": {
+            "first_name": "Dr. Jet",
+            "last_name": "Li",
+            "date_of_birth": "2022-05-26",
+            "gender": "Male"
+        },
+        "specialty": "Physician",
+        "years_of_experience": 10,
+        "contact_information": {
+            "phone_number": "02452515488",
+            "email": "jet@example.com",
+            "address": "China Town"
+        },
+        "emergency_contact": {
+            "full_name": "Sii Pii",
+            "relationship": "Sister",
+            "phone_number": "024548457845"
+        }
+    }
+]

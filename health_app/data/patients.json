@@ -1,0 +1,94 @@
+[
+    {
+        "date_created": "2025-05-26T20:57:02.169117Z",
+        "date_updated": "2025-05-26T21:52:01.595117Z",
+        "date_deleted": null,
+        "id": "4f9b96ca-2791-42c4-bfb0-d2cf2f1ce651",
+        "patient_folder_number": "GHA-TM-AAA0001",
+        "biodata": {
+            "first_name": "Nhyira",
+            "last_name": "Essel",
+            "date_of_birth": "2025-04-26",
+            "gender": "Male"
+        },
+        "contact_information": {
+            "phone_number": "52053 31043",
+            "email": "essel@example.com",
+            "address": "Tema C2"
+        },
+        "emergency_contact": {
+            "full_name": "Nana Nie",
+            "relationship": "Dad",
+            "phone_number": "0244775818"
+        }
+    },
+    {
+        "date_created": "2025-05-26T21:56:27.499788Z",
+        "date_updated": "2025-05-26T21:56:27.499788Z",
+        "date_deleted": null,
+        "id": "a841527a-5b4b-4cd3-a0b3-f8544efd6d98",
+        "patient_folder_number": "GHA-TM-AAA0002",
+        "biodata": {
+            "first_name": "Nan",
+            "last_name": "Nie",
+            "date_of_birth": "2025-01-26",
+            "gender": "Male"
+        },
+        "contact_information": {
+            "phone_number": "+9708 205 2-60--1",
+            "email": "nana@example.com",
+            "address": "string"
+        },
+        "emergency_contact": {
+            "full_name": "Hoo Poo",
+            "relationship": "Bro",
+            "phone_number": "+628047 "
+        }
+    },
+    {
+        "date_created": "2025-05-26T21:57:21.267829Z",
+        "date_updated": "2025-05-26T21:57:21.267829Z",
+        "date_deleted": null,
+        "id": "4b38c2aa-9009-4478-9a2b-43f5bdc4281e",
+        "patient_folder_number": "GHA-TM-AAA0003",
+        "biodata": {
+            "first_name": "Liu",
+            "last_name": "Pii",
+            "date_of_birth": "2025-02-26",
+            "gender": "Male"
+        },
+        "contact_information": {
+            "phone_number": "+9708 205 2-60--1",
+            "email": "liu@example.com",
+            "address": "Joopo"
+        },
+        "emergency_contact": {
+            "full_name": "Hoo Lee",
+            "relationship": "Bro",
+            "phone_number": "+628047 "
+        }
+    },
+    {
+        "date_created": "2025-05-26T23:37:32.858123Z",
+        "date_updated": "2025-05-26T23:37:32.858123Z",
+        "date_deleted": null,
+        "id": "befdeb9f-45de-4a76-83f5-bee6e2133d10",
+        "patient_folder_number": "GHA-TM-AAA0004",
+        "biodata": {
+            "first_name": "Mr Hansi",
+            "last_name": "Perp",
+            "date_of_birth": "2025-03-26",
+            "gender": "Male"
+        },
+        "contact_information": {
+            "phone_number": "-7-199-13272554 34-8",
+            "email": "harrinun@gmail.com",
+            "address": "Internet"
+        },
+        "emergency_contact": {
+            "full_name": "Joe B",
+            "relationship": "Brother",
+            "phone_number": "+730632-09458165-4"
+        }
+    }
+]

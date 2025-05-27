@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+
+# Virtual environment folder (now at root)
+venv/ 
+# Or if you use other names like .venv, etc.
+
+# Environment variables file (at root)
+.env
+
+# OS and Editor specific files (examples)
+.DS_Store
+*.log
+.vscode/
+.idea/
