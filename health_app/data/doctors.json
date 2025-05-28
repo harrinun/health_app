@@ -22,5 +22,29 @@
             "relationship": "Sister",
             "phone_number": "024548457845"
         }
+    },
+    {
+        "date_created": "2025-05-28T19:58:03.537444Z",
+        "date_updated": "2025-05-28T19:58:03.537444Z",
+        "date_deleted": null,
+        "id": "7e147a7d-a648-486c-b646-19258abdf4fe",
+        "biodata": {
+            "first_name": "Dr",
+            "last_name": "Affram",
+            "date_of_birth": "2000-05-28",
+            "gender": "Male"
+        },
+        "specialty": "Gynae",
+        "years_of_experience": 15,
+        "contact_information": {
+            "phone_number": "5088062723049",
+            "email": "tghrecords@outlook.com",
+            "address": "East Legon"
+        },
+        "emergency_contact": {
+            "full_name": "Desmond Mightyman",
+            "relationship": "Brother",
+            "phone_number": "8446164023579"
+        }
     }
 ]

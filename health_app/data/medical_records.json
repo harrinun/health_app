@@ -1,1 +1,17 @@
-[]
+[
+    {
+        "date_created": "2025-05-28T20:27:40.420247Z",
+        "date_updated": "2025-05-28T20:27:40.420247Z",
+        "date_deleted": null,
+        "id": "e128e833-5105-456e-b696-6ecec2a602a9",
+        "patient_id": "4f9b96ca-2791-42c4-bfb0-d2cf2f1ce651",
+        "appointment_id": "95e931f0-12c4-41f5-98c0-4714ce1dfd4b",
+        "diagnosis": "Insomia",
+        "prescriptions": [
+            "Guava Leaves"
+        ],
+        "treatment_date": "2025-05-30",
+        "doctor_notes": "Boil leaves and take 2 cups am/pm for 2 days",
+        "attending_doctor_id": "7e147a7d-a648-486c-b646-19258abdf4fe"
+    }
+]

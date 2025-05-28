@@ -1,1 +1,13 @@
-[]
+[
+    {
+        "date_created": "2025-05-28T20:14:51.545908Z",
+        "date_updated": "2025-05-28T20:14:51.545908Z",
+        "date_deleted": null,
+        "id": "95e931f0-12c4-41f5-98c0-4714ce1dfd4b",
+        "patient_id": "4f9b96ca-2791-42c4-bfb0-d2cf2f1ce651",
+        "doctor_id": "9c63e608-485a-4282-b489-a23fb40afd59",
+        "appointment_date_time": "2025-05-30T20:11:35.306000Z",
+        "status": "Scheduled",
+        "notes": "Regualr checkup"
+    }
+]
