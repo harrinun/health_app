@@ -44,7 +44,7 @@ app.middleware("http")(add_process_time_header_and_log)
 async def custom_validation_exception_handler(request: Request, exc: RequestValidationError):
     module_logger.error(f"Request Validation Error for {request.method} {request.url.path}: {exc.errors()}")
     # Use jsonable_encoder to ensure all parts of exc.errors() are serializable
-    serializable_errors = jsonable_encoder(exc.errors()) # <--- USE jsonable_encoder HERE
+    serializable_errors = jsonable_encoder(exc.errors()) 
     response_content = {"detail": "Validation Error", "errors": serializable_errors}
     return JSONResponse(
         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,

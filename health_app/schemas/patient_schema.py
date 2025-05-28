@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field # BaseModel already imported, but good for clarity
+from pydantic import BaseModel
 from typing import Optional
 from uuid import UUID
 from datetime import datetime # For timestamp fields in response
@@ -34,9 +34,7 @@ class PatientUpdateSchema(BaseModel):
     biodata: Optional[BiodataBaseSchema] = None
     contact_information: Optional[ContactInformationBaseSchema] = None
     emergency_contact: Optional[EmergencyContactBaseSchema] = None
-    # Note: For partial updates of nested objects (like updating only first_name in biodata),
-    # the API endpoint logic might need to handle merging existing data with partial update data.
-    # Pydantic's `model_dump(exclude_unset=True)` on the input schema helps here.
+
 
 class PatientResponseSchema(PatientBaseSchema, TimestampSchema):
     """
@@ -48,40 +46,7 @@ class PatientResponseSchema(PatientBaseSchema, TimestampSchema):
 
     # Inherits biodata, contact_information, emergency_contact from PatientBaseSchema
     # Inherits date_created, date_updated, date_deleted from TimestampSchema
-    
-    # Pydantic v2 config for ORM mode (from_attributes)
-    # This is needed if creating this schema from a PatientModel instance.
-    # TimestampSchema already has this, but good to be explicit if this class
-    # itself were directly converting. If inheriting, the base config might apply.
-    # model_config = {
-    # "from_attributes": True
-    # }
-    # Let's rely on TimestampSchema's config or ensure this model has it if used directly.
-    # For clarity, ensuring this class also has from_attributes enabled:
+   
     class Config:
-        from_attributes = True # Pydantic v1 style, for v2 use model_config (as in TimestampSchema)
-        # The above Config class might be overridden by model_config if both present.
-        # Let's stick to Pydantic v2 style for consistency:
-        # This model will inherit model_config from TimestampSchema if it's set there correctly.
-        # If PatientBaseSchema also needed from_attributes, it would need its own model_config.
-        # For now, PatientBaseSchema is for input, so it doesn't need from_attributes.
-
-# To ensure `PatientResponseSchema` works correctly with `from_attributes`, especially with
-# nested Pydantic models from your ORM/data layer that map to `BiodataBaseSchema` etc.,
-# those nested schemas (if they were also intended for response and populated from ORM objects)
-# would also need `from_attributes = True`.
-# However, `BiodataBaseSchema`, `ContactInformationBaseSchema`, `EmergencyContactBaseSchema`
-# as defined are primarily for *input validation* for create/update.
-# If `PatientResponseSchema`'s nested fields `biodata`, etc. are to be populated from `PatientModel.biodata` (which is a `Biodata` model instance),
-# then `PatientResponseSchema` needs to know how to convert `Biodata` (model) to `BiodataBaseSchema` (schema).
-# One way is that `BiodataBaseSchema` itself could have `from_attributes=True` if it were also used in responses.
-# Or, `PatientResponseSchema` could define `biodata: BiodataModel` (referencing the actual model type) if direct mapping is desired,
-# but usually, response schemas are composed of other response schemas.
-
-# Let's refine: For response, the nested schemas should also support from_attributes if they are distinct types.
-# For simplicity, if BiodataBaseSchema is used for response as well:
-# class BiodataResponseSchema(BiodataBaseSchema): model_config = {"from_attributes": True}
-# And PatientResponseSchema would use BiodataResponseSchema.
-# For now, the current structure should work if the service layer correctly prepares the data.
-# FastAPI handles this conversion well if from_attributes is set at the top-level response schema
-# and the nested fields can be mapped.
+        from_attributes = True
+        

@@ -1,11 +1,11 @@
 from pydantic import BaseModel, Field, field_validator
 from typing import Optional
 from uuid import UUID
-from datetime import datetime, timezone
+from datetime import datetime
 
 # Import base schema for timestamps and the enum for appointment status
 from .base_schema import TimestampSchema
-from ..models.enums import AppointmentStatusEnum # Used for status field
+from ..models.enums import AppointmentStatusEnum
 
 # --- Appointment Schemas ---
 
@@ -23,20 +23,11 @@ class AppointmentBaseSchema(BaseModel):
     def ensure_future_or_present_datetime_on_create_or_update(cls, v: datetime, values) -> datetime:
         """
         Validate that the appointment datetime is not in the past when creating or updating.
-        The service layer will also perform this check, but schema validation is good for early feedback.
-        This validator is more relevant for Create/Update schemas.
         """
         # Ensure datetime is timezone-aware (assume UTC if naive, or raise error)
         if v.tzinfo is None:
-            # For schemas, it's often better to expect timezone-aware datetime strings from clients.
-            # If a naive datetime is received, how to handle it depends on API contract.
-            # Here, we'll assume if it's naive, it might be an issue or needs to be localized.
-            # For simplicity in schema, we might just check if it's past based on server's current UTC time.
-            # A more robust solution involves clear API documentation on expected datetime formats (ISO 8601 with TZ).
-            pass # Let service layer handle timezone enforcement if needed, or expect ISO strings.
-
-        # This validation might be too strict at schema level if loading existing past appointments.
-        # For 'create' or 'update' operations where a new time is set, it's relevant.
+            
+            pass # Let service layer handle timezone enforcement if needed
         # if v < datetime.now(timezone.utc):
         #     raise ValueError('Appointment date and time cannot be in the past for new or rescheduled appointments.')
         return v
@@ -44,12 +35,10 @@ class AppointmentBaseSchema(BaseModel):
 class AppointmentCreateSchema(AppointmentBaseSchema):
     """
     Schema for creating a new appointment.
-    Status is typically set by the server (e.g., to 'Scheduled' or 'Pending').
     ID and timestamps are server-generated.
     """
     # Inherits patient_id, doctor_id, appointment_date_time, notes
     # Status will be set by the service, e.g., to SCHEDULED by default.
-    # If client can suggest a status like PENDING, it could be added here.
     status: Optional[AppointmentStatusEnum] = Field(default=AppointmentStatusEnum.SCHEDULED, description="Initial status (server may override or set default).")
 
 
@@ -59,9 +48,6 @@ class AppointmentUpdateSchema(BaseModel):
     Allows for partial updates (PATCH requests).
     """
     # patient_id and doctor_id are generally not updatable for an existing appointment.
-    # If they need to change, it's often a new appointment.
-    # patient_id: Optional[UUID] = Field(default=None, description="ID of the patient.")
-    # doctor_id: Optional[UUID] = Field(default=None, description="ID of the doctor.")
     appointment_date_time: Optional[datetime] = Field(default=None, description="New date and time for the appointment (UTC).")
     status: Optional[AppointmentStatusEnum] = Field(default=None, description="New status of the appointment.")
     notes: Optional[str] = Field(default=None, max_length=500, description="Updated notes for the appointment.")
@@ -88,5 +74,4 @@ class AppointmentResponseSchema(AppointmentBaseSchema, TimestampSchema):
     # Inherits patient_id, doctor_id, appointment_date_time, notes from AppointmentBaseSchema
     # Inherits date_created, date_updated, date_deleted from TimestampSchema
 
-    # The `model_config = {"from_attributes": True}` is inherited from TimestampSchema,
-    # allowing this schema to be created from AppointmentModel instances.
+   

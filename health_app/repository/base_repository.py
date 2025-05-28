@@ -4,9 +4,8 @@ from datetime import datetime, timezone
 from pydantic import BaseModel
 import logging
 
-# Assuming TimestampMixin is in models.base, adjust if necessary
-from ..models.base import TimestampMixin 
-from ..utils.file_manager import FileManager # <--- CORRECTED IMPORT
+
+from ..utils.file_manager import FileManager 
 
 logger = logging.getLogger(__name__)
 

@@ -10,7 +10,7 @@ from .base_schema import TimestampSchema
 
 class MedicalRecordBaseSchema(BaseModel):
     """
-    Base schema for medical record data, primarily for input.
+    Base schema for medical record data.
     """
     patient_id: UUID = Field(..., description="ID of the patient this medical record belongs to.")
     diagnosis: str = Field(..., min_length=3, description="Diagnosis made by the doctor.")

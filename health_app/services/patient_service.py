@@ -1,6 +1,6 @@
 from typing import List, Optional, Tuple
-from uuid import UUID, uuid4 
-from datetime import datetime, timezone
+from uuid import UUID
+from datetime import datetime
 
 from ..models.patient_model import PatientModel
 from ..models.base import Biodata, ContactInformation, EmergencyContact
@@ -77,12 +77,8 @@ class PatientService:
         
         new_folder_number = f"GHA-TM-{next_alpha_str}{next_numeric:04d}"
 
-        # Check for collisions (important if _get_last_folder_code_parts is not perfectly atomic or if there's data corruption)
-        # This check can be resource-intensive. For file-based systems, it might be okay.
-        # In a DB, a unique constraint would handle this better.
         if self.patient_repository.find_by_folder_number(new_folder_number):
             logger.error(f"Concurrency issue: Generated folder number {new_folder_number} already exists. This should be rare.")
-            # This indicates a serious issue, possibly needing a retry mechanism or manual intervention.
             # For now, we raise an exception suggesting a concurrency problem.
             raise ConcurrencyException(f"Generated patient folder number {new_folder_number} already exists. Please try again.")
 
@@ -148,9 +144,6 @@ class PatientService:
         logger.debug(f"Fetching patient by ID: {patient_id}, include_deleted: {include_deleted}")
         patient = self.patient_repository.get_by_id(patient_id, include_deleted=include_deleted)
         if not patient:
-            # No ResourceNotFoundException here, as service method signature allows Optional return for "not found".
-            # Routers will handle converting None to 404.
-            # If we wanted service to always raise on not found (for active), we would do it here.
             logger.debug(f"Patient with ID {patient_id} not found or does not meet deletion criteria.")
         return patient
 
@@ -159,15 +152,10 @@ class PatientService:
         return self.patient_repository.get_all(skip=skip, limit=limit, include_deleted=include_deleted)
 
     def update_patient(self, patient_id: UUID, update_fields: dict) -> Optional[PatientModel]:
-        # First, check if the patient exists and is active (update shouldn't apply to soft-deleted)
+        # Check if the patient exists and is active (update shouldn't apply to soft-deleted)
         patient_to_update = self.patient_repository.get_by_id(patient_id, include_deleted=False)
         if not patient_to_update:
-            # To provide a specific "not found" or "inactive" message, we'd need to check more deeply.
-            # For now, if get_by_id (active only) fails, it's effectively not found for update.
-            # The repository's update method also has checks.
             logger.warning(f"Update failed: Active patient with ID {patient_id} not found.")
-            # Routers will convert None to 404. Or raise ResourceNotFoundException here.
-            # raise ResourceNotFoundException(resource_name="Active patient", resource_id=patient_id)
             return None 
 
         logger.info(f"Attempting to update patient ID: {patient_id} with data: {update_fields}")
@@ -189,7 +177,7 @@ class PatientService:
 
         logger.info(f"Attempting to soft delete patient ID: {patient_id}")
         deleted_patient = self.patient_repository.soft_delete(patient_id)
-        if not deleted_patient: # Should not happen if found above unless race condition
+        if not deleted_patient: 
              logger.error(f"Soft delete failed unexpectedly for patient {patient_id} after existence check.")
              raise InvalidOperationException(f"Could not soft delete patient {patient_id}.")
         return deleted_patient

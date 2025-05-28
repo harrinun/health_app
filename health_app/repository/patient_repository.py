@@ -1,11 +1,10 @@
 from pathlib import Path
-from typing import Optional, List # Added List for find_by_last_name example
+from typing import Optional, List 
 
 from .base_repository import BaseRepository
-from ..models.patient_model import PatientModel # Specific model for this repository
+from ..models.patient_model import PatientModel 
 from ..utils.file_manager import FileManager
-# Assuming models.base for TimestampMixin if needed directly, though BaseRepository handles it
-# from ..models.base import TimestampMixin 
+
 
 # --- Configuration for Patient Data ---
 # Construct the path to the data file.
@@ -16,14 +15,6 @@ from ..utils.file_manager import FileManager
 try:
     APP_DIR = Path(__file__).resolve().parent.parent
 except NameError:
-    # Fallback for environments where __file__ might not be defined.
-    # This assumes the script is run from a context where Path(".") is the health_app directory,
-    # or the project root and 'health_app' needs to be appended.
-    # For robustness, ensure your execution context aligns or rely on __file__.
-    # If CWD is project root: APP_DIR = Path(".").resolve() / "health_app"
-    # If CWD is health_app: APP_DIR = Path(".").resolve()
-    # Defaulting to a common scenario where CWD is the project root.
-    # If your structure or execution differs, this fallback might need adjustment.
     current_dir = Path(".").resolve()
     if (current_dir / "models").exists() and (current_dir / "repository").exists(): # Likely inside health_app
         APP_DIR = current_dir
@@ -93,6 +84,4 @@ class PatientRepository(BaseRepository[PatientModel]):
                     matched_patients.append(patient)
         return matched_patients
 
-    # Add other patient-specific query methods here as needed.
-    # For example, searching by partial name, date of birth range, etc.
-
+    

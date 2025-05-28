@@ -15,8 +15,7 @@ from .base_schema import (
 
 class DoctorBaseSchema(BaseModel):
     """
-    Base schema for doctor data, containing fields provided by the client
-    or common to multiple doctor schemas.
+    Base schema for doctor data, containing all required fields.
     """
     biodata: BiodataBaseSchema
     specialty: str = Field(..., min_length=2, max_length=100, description="Doctor's medical specialty (e.g., Cardiology).")
@@ -41,10 +40,8 @@ class DoctorUpdateSchema(BaseModel):
     specialty: Optional[str] = Field(default=None, min_length=2, max_length=100, description="Doctor's medical specialty.")
     years_of_experience: int = Field(..., ge=0, le=70, description="Number of years the doctor has been practicing.")
     contact_information: Optional[ContactInformationBaseSchema] = None
-    emergency_contact: Optional[EmergencyContactBaseSchema] = Field(default=None, description="Doctor's emergency contact details. Set to null or omit if no change, provide new object to update.")
-    # To explicitly remove an existing emergency_contact, the service layer might need
-    # special handling if the client sends `emergency_contact: None`.
-    # Pydantic's exclude_none=True or exclude_unset=True on model_dump can be relevant.
+    emergency_contact: Optional[EmergencyContactBaseSchema] = Field(default=None, description="Doctor's emergency contact details. Set to null or omit if no change.")
+    
 
 class DoctorResponseSchema(DoctorBaseSchema, TimestampSchema):
     """
@@ -57,9 +54,4 @@ class DoctorResponseSchema(DoctorBaseSchema, TimestampSchema):
     # emergency_contact from DoctorBaseSchema.
     # Inherits date_created, date_updated, date_deleted from TimestampSchema.
 
-    # The `model_config = {"from_attributes": True}` is inherited from TimestampSchema,
-    # allowing this schema to be created from DoctorModel instances.
-    # If DoctorBaseSchema also needed from_attributes (e.g., if it were used
-    # directly as a response for a nested object from an ORM model), it would need
-    # its own model_config. For now, DoctorBaseSchema is primarily for input structure.
-
+    

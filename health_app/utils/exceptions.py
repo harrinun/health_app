@@ -37,16 +37,5 @@ class ConcurrencyException(BaseCustomException):
             detail=detail
         )
 
-# Example of a more specific validation-related error if needed beyond Pydantic's
-# class BusinessValidationException(BaseCustomException):
-#     def __init__(self, detail: str):
-#         super().__init__(
-#             status_code=status.HTTP_400_BAD_REQUEST, # Or 422 if it's more like unprocessable entity
-#             detail=detail
-#         )
-
-# You can add more specific exceptions as your application grows, for example:
-# class PatientInactiveException(InvalidOperationException):
-#     def __init__(self, patient_id: any):
-#         super().__init__(detail=f"Operation failed: Patient with ID '{str(patient_id)}' is inactive.")
+# More exceptions to be added
 

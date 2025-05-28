@@ -1,5 +1,5 @@
 from typing import List, Optional
-from uuid import UUID, uuid4
+from uuid import UUID
 from datetime import date, datetime, timezone
 
 from ..models.medical_record_model import MedicalRecordModel
@@ -7,7 +7,7 @@ from ..repository.medical_record_repository import MedicalRecordRepository
 from ..repository.patient_repository import PatientRepository 
 from ..repository.doctor_repository import DoctorRepository 
 from ..repository.appointment_repository import AppointmentRepository 
-from ..utils.exceptions import ( # Import custom exceptions
+from ..utils.exceptions import ( 
     ResourceNotFoundException,
     InvalidOperationException
 )
@@ -188,9 +188,6 @@ class MedicalRecordService:
     def get_medical_records_for_patient(self, patient_id: UUID, include_deleted: bool = False) -> List[MedicalRecordModel]:
         logger.debug(f"Fetching medical records for patient ID: {patient_id}")
         # Validate patient exists before attempting to fetch records? Optional, repo might just return empty list.
-        # patient = self.patient_repository.get_by_id(patient_id, include_deleted=True)
-        # if not patient:
-        #     raise ResourceNotFoundException(resource_name="Patient", resource_id=patient_id)
         return self.medical_record_repository.find_by_patient_id(patient_id, include_deleted)
         
     def get_medical_records_by_attending_doctor(self, doctor_id: UUID, include_deleted: bool = False) -> List[MedicalRecordModel]:
@@ -198,8 +195,6 @@ class MedicalRecordService:
         if self.doctor_repository: # Check if doctor repo is available for validation
             doctor = self.doctor_repository.get_by_id(doctor_id, include_deleted=True)
             if not doctor:
-                # Depending on desired strictness, either raise ResourceNotFoundException or return empty list.
-                # For a "find by" operation, returning an empty list if the doctor doesn't exist is often acceptable.
                 logger.info(f"Attending doctor with ID {doctor_id} not found. Returning empty list of medical records.")
                 return []
         else:

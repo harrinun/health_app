@@ -1,5 +1,5 @@
 from typing import List, Optional
-from uuid import UUID, uuid4
+from uuid import UUID
 from datetime import datetime, timezone
 
 from ..models.appointment_model import AppointmentModel
@@ -150,10 +150,8 @@ class AppointmentService:
             logger.warning(f"Cannot change status: Active appointment ID {appointment_id} not found.")
             return None
         
-        # Business logic for status transitions can be added here if needed
-        # e.g., cannot change a 'COMPLETED' appointment back to 'SCHEDULED' without specific permissions/logic.
-        # if appointment.status == AppointmentStatusEnum.COMPLETED and new_status == AppointmentStatusEnum.SCHEDULED:
-        #     raise InvalidOperationException("Cannot reschedule a completed appointment directly.")
+        # More Business logic for status transitions will be added
+        # e.g., cannot change a 'COMPLETED' appointment back to 'SCHEDULED' without specific permissions/logic etc.
 
         update_payload = {"status": new_status}
         if notes is not None:

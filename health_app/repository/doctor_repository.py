@@ -1,9 +1,7 @@
 from pathlib import Path
-from typing import List # For type hinting
+from typing import List 
 
-# Assuming BaseRepository, DoctorModel, and FileManager are correctly importable
-# from their respective locations.
-# Adjust these imports if your actual file structure differs.
+
 from .base_repository import BaseRepository
 from ..models.doctor_model import DoctorModel # Specific model for this repository
 from ..utils.file_manager import FileManager

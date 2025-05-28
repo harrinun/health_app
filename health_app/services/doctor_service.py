@@ -1,12 +1,12 @@
 from typing import List, Optional
 from uuid import UUID, uuid4 
-from datetime import datetime # For date_of_birth type hinting
+from datetime import datetime 
 
 from ..models.doctor_model import DoctorModel
 from ..models.base import Biodata, ContactInformation, EmergencyContact 
 from ..models.enums import GenderEnum 
 from ..repository.doctor_repository import DoctorRepository
-from ..utils.exceptions import ( # Import custom exceptions
+from ..utils.exceptions import ( 
     ResourceNotFoundException,
     InvalidOperationException
 )
@@ -80,7 +80,7 @@ class DoctorService:
         new_doctor = DoctorModel(
             biodata=biodata,
             specialty=specialty,
-            years_of_experience=years_of_experience, # Pydantic's conint/Field validator handles constraints
+            years_of_experience=years_of_experience, 
             contact_information=contact_information,
             emergency_contact=optional_emergency_contact
         )
@@ -127,10 +127,6 @@ class DoctorService:
             except ValueError:
                 raise InvalidOperationException(f"Invalid gender value provided in update: {update_fields['biodata']['gender']}")
         
-        # If emergency_contact is being set to null/None explicitly in update_fields,
-        # Pydantic model_copy should handle it. If it's a dict, it's an update/replacement.
-        # If emergency_contact is in update_fields and is a dict, but missing required sub-fields,
-        # Pydantic will raise validation error when model_copy tries to create EmergencyContact.
 
         logger.info(f"Attempting to update doctor ID: {doctor_id} with data: {update_fields}")
         updated_doctor = self.doctor_repository.update(doctor_id, update_fields)

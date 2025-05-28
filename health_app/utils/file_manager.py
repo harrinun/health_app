@@ -2,7 +2,7 @@
 import json
 from typing import List, Dict, Any
 from pathlib import Path
-import logging # Added for consistency if we want to log from here
+import logging
 
 logger = logging.getLogger(__name__)
 
@@ -34,9 +34,7 @@ class FileManager:
                     json.dump([], f)
         except OSError as e:
             logger.error(f"Error ensuring file/directory exists at {self.file_path}: {e}")
-            # Depending on the severity, you might want to raise this or handle it.
-            # For now, logging it. If mkdir or open fails, subsequent operations will likely fail.
-            raise # Re-raise to make the caller aware of a critical setup failure
+            raise 
 
 
     def read_data(self) -> List[Dict[str, Any]]:
@@ -53,9 +51,6 @@ class FileManager:
                 data = json.load(f)
                 if not isinstance(data, list):
                     logger.warning(f"Data in {self.file_path} is not a list. Returning empty list.")
-                    # Optionally, you could re-initialize the file here if it's considered corrupted.
-                    # with open(self.file_path, 'w', encoding='utf-8') as fix_f:
-                    #     json.dump([], fix_f)
                     return []
                 return data
         except json.JSONDecodeError:
@@ -80,7 +75,7 @@ class FileManager:
                 json.dump(data, f, indent=4, default=str) # default=str for non-serializable types like datetime
         except IOError as e:
             logger.error(f"IOError writing to {self.file_path}: {e}")
-            raise # Re-raise to make the caller aware of the failure.
+            raise 
         except Exception as e:
             logger.error(f"Unexpected error writing data to {self.file_path}: {e}")
             raise

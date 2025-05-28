@@ -42,7 +42,7 @@ class EmergencyContactBaseSchema(BaseModel):
     relationship: str = Field(..., min_length=2, max_length=50, description="Relationship to the person.")
     phone_number: str = Field(..., pattern=r"^\+?[0-9\s-]{7,20}$", description="Emergency contact's phone number.")
 
-# For response schemas that include timestamps (these mirror TimestampMixin from models)
+# For response schemas that include timestamps
 class TimestampSchema(BaseModel):
     date_created: datetime
     date_updated: datetime

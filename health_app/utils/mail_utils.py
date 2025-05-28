@@ -1,5 +1,5 @@
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
-from pydantic import EmailStr # EmailStr is for type annotation and validation by Pydantic
+from pydantic import EmailStr 
 import os 
 import logging
 from pathlib import Path 

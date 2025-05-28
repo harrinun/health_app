@@ -1,7 +1,7 @@
-from fastapi import APIRouter, HTTPException, Depends, status, Query, BackgroundTasks # Added BackgroundTasks
+from fastapi import APIRouter, HTTPException, Depends, status, Query, BackgroundTasks
 from typing import List, Optional
 from uuid import UUID
-import logging # Added for logging
+import logging 
 
 # Schemas
 from ..schemas.patient_schema import (
@@ -12,34 +12,43 @@ from ..schemas.patient_schema import (
 # Service
 from ..services.patient_service import PatientService
 # Email utility for background task
-from ..utils.mail_utils import send_patient_welcome_email # Added email sending function
+from ..utils.mail_utils import send_patient_welcome_email
 # Repository for dependency setup (PatientService needs PatientRepository)
 from ..repository.patient_repository import PatientRepository
+# from ..utils.file_manager import FileManager # <--- REMOVED THIS LINE
 
-logger = logging.getLogger("health_app.routers.patients") # Specific logger for this router
+# Pathlib was used for APP_DIR_ROUTER logic, which is also removed as repository handles its paths
+# from pathlib import Path 
+
+logger = logging.getLogger("health_app.routers.patients_router") # Corrected logger name
 
 # --- Router Setup ---
-# Ensuring the APIRouter instance is named 'patients_router' for consistency with main.py import
 patients_router = APIRouter(
     prefix="/patients",
     tags=["Patients"],
     responses={
-        404: {"description": "Patient not found"},
-        400: {"description": "Invalid input data"}, # Added for potential ValueError/InvalidOperationException
-        409: {"description": "Conflict, e.g., resource already exists or concurrency issue"} # Added for ConcurrencyException
+        status.HTTP_404_NOT_FOUND: {"description": "Patient not found"},
+        status.HTTP_400_BAD_REQUEST: {"description": "Invalid input data"}, 
+        status.HTTP_409_CONFLICT: {"description": "Conflict, e.g., resource already exists or concurrency issue"}
     }
 )
 
 # --- Dependency for PatientService ---
-# This approach creates a new repository instance per service instance,
-# which in turn creates a new FileManager. This is simple but might not be
-# the most efficient for resource use if you had a real DB connection.
-# For file-based, it's generally fine.
+# This path logic for APP_DIR_ROUTER is generally not needed in the router
+# if the repository itself correctly resolves its data file path.
+# try:
+#     APP_DIR_ROUTER = Path(__file__).resolve().parent.parent # health_app/
+# except NameError:
+#     current_dir_router = Path(".").resolve()
+#     if (current_dir_router / "models").exists() and (current_dir_router / "repository").exists():
+#         APP_DIR_ROUTER = current_dir_router
+#     else:
+#         APP_DIR_ROUTER = current_dir_router / "health_app"
+# PATIENTS_JSON_PATH = APP_DIR_ROUTER / "data" / "patients.json" # Path not directly used here
+
 _patient_repository_instance = PatientRepository() # Instantiated once when router module is loaded
 
 def get_patient_service() -> PatientService:
-    # Consider if _patient_repository_instance should be created here for per-request or managed differently.
-    # For simplicity and current file-based backend, module-level instance is okay.
     return PatientService(patient_repository=_patient_repository_instance)
 
 
@@ -47,24 +56,15 @@ def get_patient_service() -> PatientService:
 
 @patients_router.post("/", response_model=PatientResponseSchema, status_code=status.HTTP_201_CREATED)
 async def create_new_patient(
-    patient_data: PatientCreateSchema, # FastAPI handles Pydantic validation from this schema
-    background_tasks: BackgroundTasks, # FastAPI will inject this
+    patient_data: PatientCreateSchema, 
+    background_tasks: BackgroundTasks, 
     patient_service: PatientService = Depends(get_patient_service)
 ):
     """
     Create a new patient.
     A welcome email will be sent as a background task if an email address is provided.
-    - **biodata**: Patient's biographical information.
-    - **contact_information**: Patient's contact details.
-    - **emergency_contact**: Patient's emergency contact.
-    The `patient_folder_number` is generated automatically.
     """
-    # The PatientService's create_patient method will raise custom exceptions
-    # (ResourceNotFoundException, InvalidOperationException, ConcurrencyException)
-    # which inherit from HTTPException. FastAPI's default error handling or our
-    # custom handlers in main.py will manage these.
-    
-    # Aligning with PatientService.create_patient signature:
+    # Service layer raises custom exceptions (subclasses of HTTPException)
     created_patient = patient_service.create_patient(
         first_name=patient_data.biodata.first_name,
         last_name=patient_data.biodata.last_name,
@@ -78,12 +78,11 @@ async def create_new_patient(
         emergency_phone_number=patient_data.emergency_contact.phone_number
     )
     
-    # Add email sending to background tasks if email is available
     if created_patient.contact_information and created_patient.contact_information.email:
         logger.info(f"Scheduling welcome email for patient {created_patient.id} to {created_patient.contact_information.email}")
         background_tasks.add_task(
             send_patient_welcome_email,
-            created_patient.contact_information.email, # Pass the EmailStr object
+            created_patient.contact_information.email, 
             created_patient.biodata.first_name
         )
     else:
@@ -110,8 +109,8 @@ async def get_all_patients_list(
 @patients_router.get("/{patient_id}", response_model=PatientResponseSchema)
 async def get_patient_by_id_route(
     patient_id: UUID, 
-    patient_service: PatientService = Depends(get_patient_service),
-    include_deleted: bool = Query(False, description="Set to true to retrieve a soft-deleted patient") # Added query param
+    include_deleted: bool = Query(False, description="Set to true to retrieve a soft-deleted patient"),
+    patient_service: PatientService = Depends(get_patient_service)
 ):
     """
     Retrieve a specific patient by their unique ID.
@@ -119,13 +118,8 @@ async def get_patient_by_id_route(
     """
     patient = patient_service.get_patient_by_id(patient_id, include_deleted=include_deleted)
     if not patient:
-        # If include_deleted was true and still not found, it truly doesn't exist.
-        # If include_deleted was false and not found, it might be soft-deleted or not exist.
-        # The service layer's get_by_id handles this logic by returning None.
-        detail_msg = "Patient not found"
-        if not include_deleted:
-            detail_msg += " or is inactive. Try with 'include_deleted=true' if you suspect it's soft-deleted."
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=detail_msg)
+        # Service returns None if not found based on include_deleted criteria.
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Patient with ID {patient_id} not found.")
     return patient
 
 
@@ -142,16 +136,13 @@ async def update_existing_patient(
     update_data_dict = patient_update_data.model_dump(exclude_unset=True)
     
     if not update_data_dict:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No update data provided.")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No update data provided.")
 
     # Service method will raise ResourceNotFoundException or InvalidOperationException if applicable
     updated_patient = patient_service.update_patient(patient_id, update_data_dict)
     
-    # The service returns None if the patient was not found for update (e.g., already soft-deleted).
-    # If the service raises ResourceNotFoundException directly, this check might not be needed.
-    # Based on PatientService.update_patient, it returns None if active patient not found.
-    if not updated_patient:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Patient not found or cannot be updated (e.g., inactive).")
+    if not updated_patient: # Should be covered by service exceptions, but as a fallback
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Patient with ID {patient_id} not found or could not be updated.")
     return updated_patient
 
 
@@ -162,13 +153,9 @@ async def soft_delete_existing_patient(
 ):
     """
     Soft delete a patient by their unique ID.
-    The patient record is marked as deleted but not permanently removed.
-    Returns HTTP 204 No Content on successful deletion.
     """
-    # PatientService.soft_delete_patient raises ResourceNotFoundException if not found
-    # or InvalidOperationException if already deleted (or returns existing if we change that behavior).
-    patient_service.soft_delete_patient(patient_id)
-    return None # For 204 No Content, don't return a body.
+    patient_service.soft_delete_patient(patient_id) # Service raises if not found/already deleted
+    return None 
 
 
 @patients_router.put("/{patient_id}/restore", response_model=PatientResponseSchema)
@@ -179,7 +166,5 @@ async def restore_deleted_patient(
     """
     Restore a soft-deleted patient.
     """
-    # PatientService.restore_patient raises ResourceNotFoundException or InvalidOperationException
-    restored_patient = patient_service.restore_patient(patient_id)
+    restored_patient = patient_service.restore_patient(patient_id) # Service raises if not found/not deleted
     return restored_patient
-

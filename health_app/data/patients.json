@@ -320,5 +320,28 @@
             "relationship": "Brother",
             "phone_number": "+ 365 658025452 "
         }
+    },
+    {
+        "date_created": "2025-05-28T13:09:17.857018Z",
+        "date_updated": "2025-05-28T13:09:17.857018Z",
+        "date_deleted": null,
+        "id": "a21b94e0-f401-43e8-bfd9-21a567cacae9",
+        "patient_folder_number": "GHA-TM-AAA0015",
+        "biodata": {
+            "first_name": "Freddie",
+            "last_name": "Rahman",
+            "date_of_birth": "2021-05-28",
+            "gender": "Male"
+        },
+        "contact_information": {
+            "phone_number": "0254525255",
+            "email": "rhanngroup@gmail.com",
+            "address": "GHSHQ"
+        },
+        "emergency_contact": {
+            "full_name": "Calvin Asamoah",
+            "relationship": "Lecturer",
+            "phone_number": "05260922670"
+        }
     }
 ]
