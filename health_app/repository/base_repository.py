@@ -1,8 +1,9 @@
-from typing import Generic, TypeVar, List, Optional, Type, Dict, Any
-from uuid import UUID
 from datetime import datetime, timezone
 from pydantic import BaseModel
 import logging
+from typing import Generic, TypeVar, List, Optional, Type, Dict, Any
+from uuid import UUID
+
 
 
 from ..utils.file_manager import FileManager 

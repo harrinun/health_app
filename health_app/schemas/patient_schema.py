@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
 from uuid import UUID
-from datetime import datetime # For timestamp fields in response
 
 # Import base schemas and timestamp schema
 from .base_schema import BiodataBaseSchema, ContactInformationBaseSchema, EmergencyContactBaseSchema, TimestampSchema

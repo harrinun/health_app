@@ -1,6 +1,7 @@
+from datetime import date
 from typing import List, Optional
 from uuid import UUID
-from datetime import date, datetime, timezone
+
 
 from ..models.medical_record_model import MedicalRecordModel
 from ..repository.medical_record_repository import MedicalRecordRepository

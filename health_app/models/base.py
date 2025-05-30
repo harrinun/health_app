@@ -1,7 +1,6 @@
-from pydantic import BaseModel, Field, EmailStr, field_validator
 from datetime import datetime, date, timezone 
-from typing import Optional, List
-from uuid import UUID, uuid4
+from pydantic import BaseModel, Field, EmailStr, field_validator
+from typing import Optional
 from .enums import GenderEnum 
 
 class TimestampMixin(BaseModel):

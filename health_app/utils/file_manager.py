@@ -1,4 +1,3 @@
-# health_app/utils/file_manager.py
 import json
 from typing import List, Dict, Any
 from pathlib import Path

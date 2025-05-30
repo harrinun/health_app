@@ -1,7 +1,8 @@
 from fastapi import APIRouter, HTTPException, Depends, status, Query, BackgroundTasks
-from typing import List, Optional
-from uuid import UUID
 import logging 
+from typing import List
+from uuid import UUID
+
 
 # Schemas
 from ..schemas.patient_schema import (

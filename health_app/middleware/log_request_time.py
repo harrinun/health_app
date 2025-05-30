@@ -1,7 +1,7 @@
-from fastapi import Request, Response # Added Response for type hinting
-import time
+from fastapi import Request, Response
 import logging
-import uuid # For generating a unique request ID
+import time
+import uuid 
 
 # Using a more specific logger name for middleware.
 logger = logging.getLogger("health_app.middleware") 

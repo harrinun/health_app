@@ -8,10 +8,7 @@ from ..utils.file_manager import FileManager
 
 # --- Configuration for Patient Data ---
 # Construct the path to the data file.
-# This assumes 'health_app/data/patients.json'
-# __file__ -> health_app/repository/patient_repository.py
-# .parent -> health_app/repository/
-# .parent.parent -> health_app/ (This is our application directory)
+
 try:
     APP_DIR = Path(__file__).resolve().parent.parent
 except NameError:

@@ -1,6 +1,7 @@
-from typing import List, Optional
-from uuid import UUID, uuid4 
 from datetime import datetime 
+from typing import List, Optional
+from uuid import UUID
+
 
 from ..models.doctor_model import DoctorModel
 from ..models.base import Biodata, ContactInformation, EmergencyContact 

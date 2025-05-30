@@ -1,7 +1,8 @@
-from uuid import UUID, uuid4
+from datetime import datetime
 from pydantic import Field, field_validator
-from datetime import datetime # Ensure datetime and timezone are available
 from typing import Optional
+from uuid import UUID, uuid4
+
 from .base import TimestampMixin 
 from .enums import AppointmentStatusEnum 
 

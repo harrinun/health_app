@@ -1,5 +1,5 @@
-from uuid import UUID, uuid4
 from pydantic import Field
+from uuid import UUID, uuid4
 
 from .base import TimestampMixin, Biodata, ContactInformation, EmergencyContact 
 

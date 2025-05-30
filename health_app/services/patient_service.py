@@ -1,6 +1,7 @@
+from datetime import datetime
 from typing import List, Optional, Tuple
 from uuid import UUID
-from datetime import datetime
+
 
 from ..models.patient_model import PatientModel
 from ..models.base import Biodata, ContactInformation, EmergencyContact

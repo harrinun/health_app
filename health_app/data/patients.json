@@ -343,5 +343,28 @@
             "relationship": "Lecturer",
             "phone_number": "05260922670"
         }
+    },
+    {
+        "date_created": "2025-05-30T00:40:26.336032Z",
+        "date_updated": "2025-05-30T00:40:26.336032Z",
+        "date_deleted": null,
+        "id": "e4606410-77c5-4d9c-a0fd-79c36e203d0c",
+        "patient_folder_number": "GHA-TM-AAA0016",
+        "biodata": {
+            "first_name": "Jah",
+            "last_name": "Cure",
+            "date_of_birth": "1999-05-30",
+            "gender": "Male"
+        },
+        "contact_information": {
+            "phone_number": "024545255555",
+            "email": "tghrecords@outlook.com",
+            "address": "Ital St"
+        },
+        "emergency_contact": {
+            "full_name": "Sean Pizzy",
+            "relationship": "Brother",
+            "phone_number": "024524524525455"
+        }
     }
 ]

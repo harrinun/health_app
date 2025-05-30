@@ -1,7 +1,8 @@
-from uuid import UUID, uuid4
-from pydantic import Field
 from datetime import date
+from pydantic import Field
 from typing import Optional, List
+from uuid import UUID, uuid4
+
 from .base import TimestampMixin 
 
 class MedicalRecordModel(TimestampMixin):
