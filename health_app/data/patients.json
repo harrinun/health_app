@@ -366,5 +366,97 @@
             "relationship": "Brother",
             "phone_number": "024524524525455"
         }
+    },
+    {
+        "date_created": "2025-06-26T14:23:43.986771Z",
+        "date_updated": "2025-06-26T14:23:43.986771Z",
+        "date_deleted": null,
+        "id": "6e6f72a7-826d-42ba-bd8b-c7c48c074a30",
+        "patient_folder_number": "GHA-TM-AAA0017",
+        "biodata": {
+            "first_name": "Kojo",
+            "last_name": "Json",
+            "date_of_birth": "2009-06-26",
+            "gender": "Male"
+        },
+        "contact_information": {
+            "phone_number": "+757766755616-",
+            "email": "harrinun@gmail.com",
+            "address": "Tingalee"
+        },
+        "emergency_contact": {
+            "full_name": "Obri Jee",
+            "relationship": "Brother",
+            "phone_number": "+259848334569"
+        }
+    },
+    {
+        "date_created": "2025-06-28T23:36:53.251019Z",
+        "date_updated": "2025-06-28T23:36:53.251019Z",
+        "date_deleted": null,
+        "id": "fd43691f-c474-4b70-8c4b-f600108850b1",
+        "patient_folder_number": "GHA-TM-AAA0018",
+        "biodata": {
+            "first_name": "Ras",
+            "last_name": "Nino",
+            "date_of_birth": "1990-06-28",
+            "gender": "Male"
+        },
+        "contact_information": {
+            "phone_number": "+9416433162466",
+            "email": "rhanngroup@gmail.com",
+            "address": "123, Community 11"
+        },
+        "emergency_contact": {
+            "full_name": "Sizzla Kalongi",
+            "relationship": "Brother",
+            "phone_number": "+66063792740969"
+        }
+    },
+    {
+        "date_created": "2025-06-28T23:49:02.873335Z",
+        "date_updated": "2025-06-28T23:49:02.873335Z",
+        "date_deleted": null,
+        "id": "2062dfdd-9bfd-497b-84ef-1382aae5d461",
+        "patient_folder_number": "GHA-TM-AAA0019",
+        "biodata": {
+            "first_name": "Sing",
+            "last_name": "Song",
+            "date_of_birth": "2000-06-28",
+            "gender": "Male"
+        },
+        "contact_information": {
+            "phone_number": "57911193",
+            "email": "rhanngroup@gmail.com",
+            "address": "Guitar, 123"
+        },
+        "emergency_contact": {
+            "full_name": "Melody Drummer",
+            "relationship": "Teacher",
+            "phone_number": "+525501-0-6483"
+        }
+    },
+    {
+        "date_created": "2025-06-29T00:11:15.034943Z",
+        "date_updated": "2025-06-29T00:11:15.034943Z",
+        "date_deleted": null,
+        "id": "294e30a7-0451-48ba-a6f5-41cdbf6a2bca",
+        "patient_folder_number": "GHA-TM-AAA0020",
+        "biodata": {
+            "first_name": "Jiji",
+            "last_name": "Sting",
+            "date_of_birth": "2000-06-29",
+            "gender": "Male"
+        },
+        "contact_information": {
+            "phone_number": "112827429421",
+            "email": "rhanngroup@gmail.com",
+            "address": "Bob Marley St"
+        },
+        "emergency_contact": {
+            "full_name": "Nana Jonn",
+            "relationship": "Dad",
+            "phone_number": "654452180087 "
+        }
     }
 ]

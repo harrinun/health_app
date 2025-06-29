@@ -2,7 +2,6 @@ from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
 from pydantic import EmailStr 
 import os 
 import logging
-from pathlib import Path 
 
 logger = logging.getLogger("health_app.utils.mail")
 
@@ -22,13 +21,11 @@ if not all([MAIL_USERNAME_ENV, MAIL_PASSWORD_ENV, MAIL_FROM_ENV]):
         "Email sending will likely fail."
     )
 
-# TEMPLATE_DIR = Path(__file__).resolve().parent.parent / "templates" / "email"
 
 conf = ConnectionConfig(
     MAIL_USERNAME=MAIL_USERNAME_ENV,
     MAIL_PASSWORD=MAIL_PASSWORD_ENV,
-    # Corrected usage: Assign the string directly. Pydantic validates against EmailStr type.
-    MAIL_FROM=(MAIL_FROM_ENV if MAIL_FROM_ENV else "default_from@example.com"), # <--- CORRECTED LINE
+    MAIL_FROM=(MAIL_FROM_ENV if MAIL_FROM_ENV else "default_from@example.com"), 
     MAIL_PORT=MAIL_PORT_ENV,
     MAIL_SERVER=MAIL_SERVER_ENV,
     MAIL_FROM_NAME=MAIL_FROM_NAME_ENV,
@@ -36,7 +33,6 @@ conf = ConnectionConfig(
     MAIL_SSL_TLS=MAIL_SSL_TLS_ENV,
     USE_CREDENTIALS=True,
     VALIDATE_CERTS=True, 
-    # TEMPLATE_FOLDER=TEMPLATE_DIR 
 )
 
 fm = FastMail(conf)
