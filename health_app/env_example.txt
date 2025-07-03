@@ -1,0 +1,18 @@
+MAIL_USERNAME=user_mail"
+MAIL_PASSWORD="user_password"
+MAIL_FROM="user_mail"
+MAIL_SERVER="smtp.gmail.com"
+MAIL_PORT="465"
+MAIL_STARTTLS="False"
+MAIL_SSL_TLS="True"
+MAIL_FROM_NAME="your app name"
+
+
+# Database Configuration
+DATABASE_URL="username://username:password@host:port/db_name"
+SQL_ECHO=false
+
+# Ensure persistence mode is set to storage type of choice (json or database)
+PERSISTENCE_MODE="database" 
+
+
